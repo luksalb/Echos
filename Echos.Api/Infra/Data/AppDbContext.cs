@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using Echo.Api.Domain.Users;
+using Echos.Api.Domain.Users;
 
-namespace Echo.Api.Infra.Data
+namespace Echos.Api.Infra.Data
 {
     public class AppDbContext : DbContext
     {

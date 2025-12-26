@@ -1,4 +1,4 @@
-﻿namespace Echo.Api.Domain.Users;
+﻿namespace Echos.Api.Domain.Users;
 
 public class User
 {

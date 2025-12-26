@@ -1,4 +1,4 @@
-using Echo.Api.Infra.Data;
+using Echos.Api.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
