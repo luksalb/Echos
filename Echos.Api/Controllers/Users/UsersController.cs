@@ -54,4 +54,33 @@ public class UsersController : ControllerBase
             user.Email
         });
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginRequest request)
+    {
+        var login = request.Login.Trim().ToLowerInvariant();
+
+        var user = await _db.Users.FirstOrDefaultAsync(U => 
+            !U.IsDeleted && 
+            (U.UserName == login || U.Email == login)
+        );
+            
+
+        if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+        {
+            return Unauthorized(new
+            {
+                message = "Invalid login or password."
+            });
+        }
+
+        return Ok(new
+        {
+            user.Id,
+            user.UserName,
+            user.Name,
+            user.Email
+        });
+    }
+
 }

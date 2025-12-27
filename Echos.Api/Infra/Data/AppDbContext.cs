@@ -12,5 +12,20 @@ namespace Echos.Api.Infra.Data
         }
 
         public DbSet<User> Users => Set<User>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(u => u.UserName)
+                      .IsUnique();
+
+                entity.HasIndex(u => u.Email)
+                      .IsUnique();
+            });
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }
