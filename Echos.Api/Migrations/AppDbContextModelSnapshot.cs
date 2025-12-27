@@ -24,15 +24,17 @@ namespace Echos.Api.Migrations
 
             modelBuilder.Entity("Echos.Api.Domain.Users.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("DeleterUserId")
-                        .HasColumnType("uuid");
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("timestamp with time zone");

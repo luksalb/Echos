@@ -17,9 +17,12 @@ namespace Echos.Api.Infra.Data
         {
             modelBuilder.Entity<User>(entity =>
             {
+                entity.Property(u => u.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityColumn();
+
                 entity.HasIndex(u => u.UserName)
                       .IsUnique();
-
                 entity.HasIndex(u => u.Email)
                       .IsUnique();
             });
