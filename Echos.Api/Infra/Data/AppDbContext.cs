@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Echos.Api.Domain.Users;
+using Echos.Api.Domain.Echos;
 
 namespace Echos.Api.Infra.Data
 {
@@ -12,6 +13,7 @@ namespace Echos.Api.Infra.Data
         }
 
         public DbSet<User> Users => Set<User>();
+        public DbSet<Echo> Echos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +27,17 @@ namespace Echos.Api.Infra.Data
                       .IsUnique();
                 entity.HasIndex(u => u.Email)
                       .IsUnique();
+            });
+
+            modelBuilder.Entity<Echo>(entity =>
+            {
+                entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityColumn();
+                entity.HasOne(e => e.User)
+                      .WithMany()
+                      .HasForeignKey(e => e.UserId)
+                      .OnDelete(DeleteBehavior.Restrict); 
             });
 
             base.OnModelCreating(modelBuilder);
