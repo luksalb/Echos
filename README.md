@@ -1,8 +1,14 @@
-# Echos - a verdadeira rede social
+# Echos Network
 
-Olá, o objetivo deste projeto é criar uma rede social do zero, tendo o X (antigo twitter) como inspiração para Design. Acredito que isso será um bom estudo para aprender e melhorar conhecimentos em diveras áreas do desenvolvimento de um sistema: back-end, banco, performance, segurança, deploy... ao invés de apenas fazer um CRUD. 
+A more human way to connect with others. Echos is a proximity-based social network built for privacy, real engagement, and creator protection in the age of AI.
 
-### Tecnologias
+### Vision
+Echos was born to solve the "death of the social internet". We focus on:
+* Real Proximity: An algorithm that prioritizes people you actually know and interact with.
+* Creator Shield: Native protection for artists against unauthorized AI training and malicious use of content.
+* Ethical Monetization: A clean experience with relevant, non-intrusive ads that value the user's time.
+
+### Tech Stack
 **Backend**:
 - C# + ASP.NET Core
 - API Rest
@@ -17,6 +23,5 @@ Olá, o objetivo deste projeto é criar uma rede social do zero, tendo o X (anti
 - Logs + métricas
 - Deploy: a decidir
 
-### Conceito
-Hoje as redes sociais não significam mais o nome que herdaram. Elas passaram a ser vitrines de produtos e influencidadores para seguir. Vemos muito menos atualizações de nossos amigos, vemos muito mais comerciais (1 a cada 2 stories, 1 a cada dois tweets, tiktok shop em todo lugar...). Além disso, devido a corrida da I.A, nossas informações estão inseguras, e o que criamos pode ser roubado e modificado por outros contra a nossa vontade. A ideia do Echos é mudar isso, sem dar passos para trás.
+Let your voice resonate. Join the network.
 
