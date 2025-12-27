@@ -24,11 +24,13 @@ public class UsersController : ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly IConfiguration _configuration;
+    private readonly LoginAttemptTracker _attemptTracker;
 
-    public UsersController(AppDbContext db, IConfiguration configuration)
+    public UsersController(AppDbContext db, IConfiguration configuration, LoginAttemptTracker attemptTracker)
     {
         _db = db;
         _configuration = configuration;
+        _attemptTracker = attemptTracker;
     }
 
     [AllowAnonymous]
@@ -68,6 +70,17 @@ public class UsersController : ControllerBase
     {
         var login = request.Login.Trim().ToLowerInvariant();
 
+        if (_attemptTracker.IsLockedOut(login))
+        {
+            var (current, max, lockoutEnd) = _attemptTracker.GetAttemptInfo(login);
+            var remainingTime = (lockoutEnd.Value - DateTime.UtcNow).TotalMinutes;
+
+            return StatusCode(429, new
+            {
+                message = $"Too many failed login attempts. Try again in {Math.Ceiling(remainingTime)} minutes."
+            });
+        }
+
         var user = await _db.Users.FirstOrDefaultAsync(U => 
             !U.IsDeleted && 
             (U.UserName == login || U.Email == login)
@@ -76,11 +89,16 @@ public class UsersController : ControllerBase
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
         {
+            _attemptTracker.RecordFailedAttempt(login);
+            var (current, max, _) = _attemptTracker.GetAttemptInfo(login);
+
             return Unauthorized(new
             {
-                message = "Invalid login or password."
+                message = $"Invalid login or password. Attempt {current}/{max}."
             });
         }
+
+        _attemptTracker.ResetAttempts(login);
 
         var claims = new[]
 {
